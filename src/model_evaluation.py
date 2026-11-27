@@ -1,6 +1,9 @@
 """Final evaluation of the automatically selected champion on the untouched test set."""
 from pathlib import Path
 import json
+import os
+
+os.environ.setdefault("MLFLOW_ALLOW_FILE_STORE", "true")
 
 import joblib
 import mlflow
@@ -138,6 +141,8 @@ def main():
     with open(DETAILS_PATH, "w", encoding="utf-8") as file:
         json.dump(details, file, indent=4)
 
+    tracking_uri = Path("mlruns").resolve().as_uri()
+    mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment(config["experiment_name"])
     with mlflow.start_run(run_name="champion_evaluation"):
         mlflow.log_param("champion_model", champion_name)
