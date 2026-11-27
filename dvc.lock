@@ -1,0 +1,164 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - path: data/raw/Telco-Customer-Churn.csv
+      hash: md5
+      md5: 0f9de68e012bd3aed5fa7cdc9fc421af
+      size: 977501
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: 00b34dcbda5ea12b0c2cd54bdddc28fa
+      size: 1551
+    outs:
+    - path: data/ingested/telco_churn.csv
+      hash: md5
+      md5: 7f07de26b054de4c36eed95a1277fe21
+      size: 978285
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - path: data/ingested/telco_churn.csv
+      hash: md5
+      md5: 7f07de26b054de4c36eed95a1277fe21
+      size: 978285
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: 0c09fcfa0a4a4465bb8ff5ced65a7d03
+      size: 2314
+    params:
+      params.yaml:
+        random_state: 42
+        test_size: 0.2
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 3ec73203e4b9080c693b57bf1f2413e0
+      size: 179435
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 82a00315cdfa36595b1e188fb4fe55b7
+      size: 718070
+  feature_engineering:
+    cmd: python src/feature_engineering.py
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 3ec73203e4b9080c693b57bf1f2413e0
+      size: 179435
+    - path: data/processed/train.csv
+      hash: md5
+      md5: 82a00315cdfa36595b1e188fb4fe55b7
+      size: 718070
+    - path: src/feature_engineering.py
+      hash: md5
+      md5: 07e79fe8a1a29f29f3f98a2d4805c682
+      size: 2019
+    outs:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: f91024c2132f2b5c8e2d231201781785
+      size: 176619
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: b529ae0cf790a1db535dfbca4761658a
+      size: 706832
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: 5bcbcd7e6aa29b6ca9185c0d4f63e610
+      size: 4222
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 813ef510d283baeaf33c19efb8535e25
+      size: 16855
+  model_building:
+    cmd: python src/model_building.py
+    deps:
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: b529ae0cf790a1db535dfbca4761658a
+      size: 706832
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 813ef510d283baeaf33c19efb8535e25
+      size: 16855
+    - path: src/model_building.py
+      hash: md5
+      md5: 3df737dde899b4bf5eb5f4b35f62a210
+      size: 20764
+    params:
+      params.yaml:
+        cv_folds: 5
+        experiment_name: Telco_Churn_DVC_Pipeline
+        max_k: 30
+        measurement:
+          training_time_repeats: 3
+          prediction_n_samples: 50
+          prediction_repeats: 5
+        n_trials: 30
+        random_state: 42
+        selection:
+          max_accuracy_gap_pct: 5.0
+          accuracy_tolerance_pct: 1.0
+          weights:
+            model_size_mb: 0.4
+            training_time_seconds: 0.3
+            prediction_time_ms: 0.3
+          fallback_if_none_eligible: smallest_gap
+          gap_penalty_in_search: true
+          gap_penalty_weight: 1.0
+    outs:
+    - path: models
+      hash: md5
+      md5: e6a1bf852a8410eabc476e770614867f.dir
+      size: 4019332
+      nfiles: 7
+    - path: reports/model_comparison.csv
+      hash: md5
+      md5: 271c5fe0481b532fd7790c1f35eb66f5
+      size: 569
+    - path: reports/model_comparison.md
+      hash: md5
+      md5: e3e581782fd13ddef3d9f42735ae78ad
+      size: 805
+    - path: reports/model_selection.json
+      hash: md5
+      md5: e740bf07bc5b1a240bcf825828e73985
+      size: 6130
+  model_evaluation:
+    cmd: python src/model_evaluation.py
+    deps:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: f91024c2132f2b5c8e2d231201781785
+      size: 176619
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: 5bcbcd7e6aa29b6ca9185c0d4f63e610
+      size: 4222
+    - path: models
+      hash: md5
+      md5: e6a1bf852a8410eabc476e770614867f.dir
+      size: 4019332
+      nfiles: 7
+    - path: reports/model_selection.json
+      hash: md5
+      md5: e740bf07bc5b1a240bcf825828e73985
+      size: 6130
+    - path: src/model_evaluation.py
+      hash: md5
+      md5: 6ed6eca4185a522cb84b350932c97d36
+      size: 7089
+    params:
+      params.yaml:
+        experiment_name: Telco_Churn_DVC_Pipeline
+    outs:
+    - path: reports/evaluation_details.json
+      hash: md5
+      md5: f5d2ee08aa1cb843e40dc0be17924017
+      size: 6463
+    - path: reports/metrics.json
+      hash: md5
+      md5: b5e55fe9a32bc0c14324c4e75ca34026
+      size: 662

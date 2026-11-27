@@ -1,0 +1,17 @@
+myenv/
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ipynb_checkpoints/
+.env
+
+mlruns/
+mlartifacts/
+*.pkl
+data/raw/
+data/ingested/
+data/processed/
+data/monitoring/

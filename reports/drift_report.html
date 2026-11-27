@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Telco Churn MLOps Data Drift Monitoring</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8fafc; margin: 0; padding: 24px; color: #1e293b; }
+        .container { max-width: 960px; margin: 0 auto; }
+        .header { background: white; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .badge { display: inline-block; padding: 6px 14px; border-radius: 16px; color: white; font-weight: bold; font-size: 14px; background: #10b981; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+        .stat-card { background: #f1f5f9; padding: 12px; border-radius: 8px; text-align: center; }
+        .stat-num { font-size: 20px; font-weight: bold; color: #0f172a; }
+        .stat-label { font-size: 12px; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h1 style="margin: 0 0 6px 0; font-size: 24px;">📡 Telco Customer Churn Drift Report</h1>
+                    <div style="color: #64748b; font-size: 13px;">Analyzed at: 2026-11-27T06:31:18.619941+00:00</div>
+                </div>
+                <div class="badge">DISTRIBUTION HEALTHY</div>
+            </div>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-num">5616</div>
+                    <div class="stat-label">Reference Samples</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">50</div>
+                    <div class="stat-label">Production Logs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">9 / 19</div>
+                    <div class="stat-label">Drifted Features</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">47.37%</div>
+                    <div class="stat-label">Drift Share</div>
+                </div>
+            </div>
+        </div>
+        <h2 style="font-size: 18px; margin-bottom: 12px;">Feature Drift Tests (Kolmogorov-Smirnov &amp; Chi-Square)</h2>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">tenure <span style="font-size: 12px; color: #64748b;">(Kolmogorov-Smirnov)</span></strong>
+                <span style="background: #ef4444; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">DRIFT</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.0000</b></div>
+                <div>Stat: <b style="color: #0f172a;">0.7094</b></div>
+                <div>Reference: <b style="color: #0f172a;">32.43 (±24.52)</b></div>
+                <div>Production: <b style="color: #0f172a;">5.90 (±3.15)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">MonthlyCharges <span style="font-size: 12px; color: #64748b;">(Kolmogorov-Smirnov)</span></strong>
+                <span style="background: #ef4444; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">DRIFT</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.0000</b></div>
+                <div>Stat: <b style="color: #0f172a;">0.4600</b></div>
+                <div>Reference: <b style="color: #0f172a;">64.89 (±30.05)</b></div>
+                <div>Production: <b style="color: #0f172a;">87.96 (±12.73)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">TotalCharges <span style="font-size: 12px; color: #64748b;">(Kolmogorov-Smirnov)</span></strong>
+                <span style="background: #ef4444; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">DRIFT</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.0000</b></div>
+                <div>Stat: <b style="color: #0f172a;">0.5457</b></div>
+                <div>Reference: <b style="color: #0f172a;">2290.32 (±2275.42)</b></div>
+                <div>Production: <b style="color: #0f172a;">516.60 (±287.29)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">gender <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #10b981; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">PASS</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.2568</b></div>
+                <div>Stat: <b style="color: #0f172a;">1.2857</b></div>
+                <div>Reference: <b style="color: #0f172a;">Female (50.0%)</b></div>
+                <div>Production: <b style="color: #0f172a;">Male (42.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">SeniorCitizen <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #ef4444; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">DRIFT</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.0000</b></div>
+                <div>Stat: <b style="color: #0f172a;">24.3937</b></div>
+                <div>Reference: <b style="color: #0f172a;">No (83.8%)</b></div>
+                <div>Production: <b style="color: #0f172a;">No (58.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">Partner <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #10b981; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">PASS</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.3458</b></div>
+                <div>Stat: <b style="color: #0f172a;">0.8890</b></div>
+                <div>Reference: <b style="color: #0f172a;">No (51.3%)</b></div>
+                <div>Production: <b style="color: #0f172a;">No (58.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">Dependents <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #ef4444; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">DRIFT</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.0294</b></div>
+                <div>Stat: <b style="color: #0f172a;">4.7451</b></div>
+                <div>Reference: <b style="color: #0f172a;">No (70.1%)</b></div>
+                <div>Production: <b style="color: #0f172a;">No (56.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">PhoneService <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #10b981; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">PASS</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.7281</b></div>
+                <div>Stat: <b style="color: #0f172a;">0.1209</b></div>
+                <div>Reference: <b style="color: #0f172a;">Yes (90.6%)</b></div>
+                <div>Production: <b style="color: #0f172a;">Yes (92.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">MultipleLines <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #ef4444; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">DRIFT</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.0399</b></div>
+                <div>Stat: <b style="color: #0f172a;">6.4452</b></div>
+                <div>Reference: <b style="color: #0f172a;">No (48.0%)</b></div>
+                <div>Production: <b style="color: #0f172a;">No (64.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">InternetService <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #ef4444; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">DRIFT</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.0000</b></div>
+                <div>Stat: <b style="color: #0f172a;">26.4673</b></div>
+                <div>Reference: <b style="color: #0f172a;">Fiber optic (44.0%)</b></div>
+                <div>Production: <b style="color: #0f172a;">Fiber optic (80.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">OnlineSecurity <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #10b981; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">PASS</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.7815</b></div>
+                <div>Stat: <b style="color: #0f172a;">0.4930</b></div>
+                <div>Reference: <b style="color: #0f172a;">No (49.7%)</b></div>
+                <div>Production: <b style="color: #0f172a;">No (54.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">OnlineBackup <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #10b981; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">PASS</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.7459</b></div>
+                <div>Stat: <b style="color: #0f172a;">0.5863</b></div>
+                <div>Reference: <b style="color: #0f172a;">No (43.5%)</b></div>
+                <div>Production: <b style="color: #0f172a;">No (48.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">DeviceProtection <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #10b981; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">PASS</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.8349</b></div>
+                <div>Stat: <b style="color: #0f172a;">0.3608</b></div>
+                <div>Reference: <b style="color: #0f172a;">No (44.1%)</b></div>
+                <div>Production: <b style="color: #0f172a;">No (40.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">TechSupport <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #10b981; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">PASS</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.8707</b></div>
+                <div>Stat: <b style="color: #0f172a;">0.2769</b></div>
+                <div>Reference: <b style="color: #0f172a;">No (49.5%)</b></div>
+                <div>Production: <b style="color: #0f172a;">No (46.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">StreamingTV <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #10b981; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">PASS</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.5395</b></div>
+                <div>Stat: <b style="color: #0f172a;">1.2341</b></div>
+                <div>Reference: <b style="color: #0f172a;">No (39.7%)</b></div>
+                <div>Production: <b style="color: #0f172a;">No (46.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">StreamingMovies <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #10b981; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">PASS</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.6449</b></div>
+                <div>Stat: <b style="color: #0f172a;">0.8774</b></div>
+                <div>Reference: <b style="color: #0f172a;">No (39.6%)</b></div>
+                <div>Production: <b style="color: #0f172a;">No (46.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">Contract <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #ef4444; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">DRIFT</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.0002</b></div>
+                <div>Stat: <b style="color: #0f172a;">17.4916</b></div>
+                <div>Reference: <b style="color: #0f172a;">Month-to-month (54.8%)</b></div>
+                <div>Production: <b style="color: #0f172a;">Month-to-month (84.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">PaperlessBilling <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #10b981; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">PASS</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.7820</b></div>
+                <div>Stat: <b style="color: #0f172a;">0.0766</b></div>
+                <div>Reference: <b style="color: #0f172a;">Yes (59.9%)</b></div>
+                <div>Production: <b style="color: #0f172a;">Yes (58.0%)</b></div>
+            </div>
+        </div>
+        
+        <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 12px; background: white;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 16px; color: #1e293b;">PaymentMethod <span style="font-size: 12px; color: #64748b;">(Chi-Square)</span></strong>
+                <span style="background: #ef4444; color: white; padding: 3px 10px; border-radius: 12px; font-weight: bold; font-size: 12px;">DRIFT</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; font-size: 13px; color: #64748b;">
+                <div>p-value: <b style="color: #0f172a;">0.0033</b></div>
+                <div>Stat: <b style="color: #0f172a;">13.7080</b></div>
+                <div>Reference: <b style="color: #0f172a;">Electronic check (33.9%)</b></div>
+                <div>Production: <b style="color: #0f172a;">Electronic check (58.0%)</b></div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
