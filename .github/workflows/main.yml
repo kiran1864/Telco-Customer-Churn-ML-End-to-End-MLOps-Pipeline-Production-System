@@ -91,12 +91,13 @@ jobs:
           print("Quality gate passed")
           PY
 
-      - name: Upload champion model and reports
+      - name: Upload champion model, training data, and reports
         uses: actions/upload-artifact@v4
         with:
           name: telco-churn-model-artifacts
           path: |
             models/model.pkl
+            data/processed/train.csv
             reports/metrics.json
             reports/evaluation_details.json
             reports/model_selection.json
@@ -113,16 +114,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download champion model
+      - name: Download pipeline artifacts
         uses: actions/download-artifact@v4
         with:
           name: telco-churn-model-artifacts
           path: artifacts
 
-      - name: Place model where the Dockerfile expects it
+      - name: Place artifacts where the Dockerfile expects them
         run: |
-          mkdir -p models
+          mkdir -p models data/processed
           cp artifacts/models/model.pkl models/model.pkl
+          cp artifacts/data/processed/train.csv data/processed/train.csv
 
       - name: Build image
         run: docker build -t $IMAGE_NAME:latest .
