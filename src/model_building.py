@@ -345,6 +345,8 @@ def main():
     n_trials = int(config["n_trials"])
     max_k = int(config.get("max_k", 30))
 
+    tracking_uri = Path("mlruns").resolve().as_uri()
+    mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment(config["experiment_name"])
 
     results = {}
