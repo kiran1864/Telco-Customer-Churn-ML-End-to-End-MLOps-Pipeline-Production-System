@@ -12,6 +12,7 @@ mlruns/
 mlartifacts/
 *.pkl
 data/raw/
+!data/raw/Telco-Customer-Churn.csv
 data/ingested/
 data/processed/
 data/monitoring/
