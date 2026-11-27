@@ -6,7 +6,8 @@ import shutil
 import time
 import warnings
 
-os.environ.setdefault("LOKY_MAX_CPU_COUNT", "4")
+
+os.environ.setdefault("MLFLOW_ALLOW_FILE_STORE", "true")
 
 import joblib
 import mlflow
