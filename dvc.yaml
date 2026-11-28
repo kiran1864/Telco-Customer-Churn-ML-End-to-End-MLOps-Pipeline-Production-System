@@ -47,9 +47,12 @@ stages:
       - measurement
     outs:
       - models
-      - reports/model_selection.json
-      - reports/model_comparison.csv
-      - reports/model_comparison.md
+      - reports/model_selection.json:
+          cache: false
+      - reports/model_comparison.csv:
+          cache: false
+      - reports/model_comparison.md:
+          cache: false
 
   model_evaluation:
     cmd: python src/model_evaluation.py
