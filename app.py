@@ -20,7 +20,7 @@ from src.monitor_drift import (
     render_html_report,
 )
 
-MODEL_PATH = Path("models/model.pkl")
+MODEL_PATH = Path("model.pkl")
 METRICS_PATH = Path("reports/metrics.json")
 SELECTION_PATH = Path("reports/model_selection.json")
 COMPARISON_CSV_PATH = Path("reports/model_comparison.csv")

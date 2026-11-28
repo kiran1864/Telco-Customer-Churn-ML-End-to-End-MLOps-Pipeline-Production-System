@@ -16,5 +16,3 @@ data/raw/
 data/ingested/
 data/processed/
 data/monitoring/
-*.pkl
-!models/model.pkl
